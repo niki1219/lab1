@@ -62,7 +62,7 @@ process(rst_i,clk_i)begin
 				counter_value_r <= counter_value_r;
 			end if;	
 		end if;
-end process;
+end process; 
 
 process(button_min_i, button_hour_i)begin
 	if(button_min_i = '1')then

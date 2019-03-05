@@ -1,0 +1,1 @@
+xst -intstyle ise -ifn "D:/RA12-2016/lab1/projects/2_additional/top.xst" -ofn "D:/RA12-2016/lab1/projects/2_additional/top.syr" 

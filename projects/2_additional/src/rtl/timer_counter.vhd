@@ -71,12 +71,14 @@ process(button_min_i, button_hour_i)begin
 		if(counter_for_min_s = 59)then
 	else 
 		if(counter_value_r = 99)then
-			counter_value_r = (others => '0');
+			counter_value_r <= (others => '0');
 		else
 			counter_value_r <= counter_value_r + 1;
 		end if;
 	end if;
+	end if;
 end process;
+
 
 led_o <= counter_value_r;
 

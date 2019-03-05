@@ -44,7 +44,7 @@ END COMPONENT clk_gen;
 -- brojac taktova
 -------------------------------------------------------------------
 COMPONENT clk_counter IS
-                    GENERIC(
+                    GENERIC(														 --00000000011000011010100000
                             max_cnt : STD_LOGIC_VECTOR(25 DOWNTO 0) := "10111110101111000010000000" -- 50 000 000
                            );
                     PORT   (
@@ -133,7 +133,7 @@ clk_counter_i:clk_counter     PORT MAP(
 
 -- clk_counter modul koji ce se iskoristiti za generisanje takta od 100Hz
 clk_counter_100Hz_i:clk_counter GENERIC MAP(
-                                             max_cnt => -- DODATI KONSTANTU
+                                             max_cnt => "00000000011000011010100000"-- DODATI KONSTANTU
                                            )
                                 PORT MAP(
                                          clk_i     => clk_50MHz_s   ,

@@ -36,6 +36,60 @@ BEGIN
 
 -- DODATI :
 -- automat sa konacnim brojem stanja koji upravlja brojanjem sekundi na osnovu stanja prekidaca
+process (reset_switch_i, start_switch_i, stop_switch_i,continue_switch_i,current_state) begin
+    case (current_state) is
+        when IDLE =>
+            if (start_switch_i = '1') then --prekidac za startovanje brojeva
+            next_state <= COUNT;
+            cnt_en_o <= '1';
+            cnt_rst_o <= '0';       
+            else               --ako je reset predji u IDLE
+            next_state <= IDLE;
+            cnt_en_o <= '0';
+            cnt_rst_o <= '1';
+            end if;
+			
+				
+        when COUNT =>
+            if (reset_switch_i = '1') then --prek za resetovanje brojeva
+            next_state <= IDLE;
+            cnt_en_o <= '0';
+            cnt_rst_o <= '1';
+            elsif (stop_switch_i = '1') then --prekidac ya zaustavljenje br
+            next_state <= STOP;
+            cnt_en_o <= '0';
+            cnt_rst_o <= '0';
+            else             --ako nije ni reset ni stop,mora ostati u COUNT
+            next_state <= COUNT;
+            cnt_en_o <= '1';
+            cnt_rst_o <= '0';
+            end if;
+				
+				
+        when STOP=>
+            if (reset_switch_i = '1') then
+            next_state <= IDLE;
+            cnt_en_o <= '0';
+            cnt_rst_o <= '1';
+            elsif (continue_switch_i = '1') then--prekidac za nastavljenje brojenja
+            next_state <= COUNT;
+            cnt_en_o <= '1';
+            cnt_rst_o <= '0';
+            else --ako ne menja stanje, mora ostati u tom stanju
+            next_state <= STOP;
+            cnt_en_o <= '0';
+            cnt_rst_o <= '0';
+            end if;
+    end case;
+end process;
+
+process (clk_i, rst_i) begin
+    if (rst_i = '1') then
+    current_state <= IDLE;
+    elsif (clk_i'event and clk_i='1') then
+        current_state <= next_state;
+        end if;
+end process;
 
 
 END rtl;

@@ -33,5 +33,23 @@ BEGIN
 -- brojac koji na osnovu izbrojanih sekundi pravi izlaz na LE diode
 
 
+process(rst_i,clk_i)begin
+		if(rst_i = '1')then
+			counter_value_r <= "00000000";
+		elsif(clk_i'event and clk_i='1')then
+			if(cnt_rst_i='1')then
+				counter_value_r <= "00000000";
+			elsif(cnt_en_i = '1')then
+				if(one_sec_i = '1')then
+					counter_value_r <= counter_value_r + 1;
+				else
+					counter_value_r <= counter_value_r;		
+				end if;		
+			else
+				counter_value_r <= counter_value_r;
+			end if;	
+		end if;
+	end process;
 
-END rtl;
+	led_o <= counter_value_r;
+	end RTL;
